@@ -20,7 +20,7 @@ engine = create_engine(DATABASE_URL)
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
-app = FastAPI(title="Tic-Tac-Toe")
+app = FastAPI(title="Tic-Tac-Toe v2")
 
 @app.on_event("startup")
 def on_startup():
