@@ -368,3 +368,9 @@ def get_stats():
         o_wins = sum(1 for g in games if g.winner == "O")
         draws = sum(1 for g in games if g.winner == "empate")
         return {"total": total, "x_wins": x_wins, "o_wins": o_wins, "draws": draws}
+
+@app.get("/reset-db")
+def reset_db():
+    SQLModel.metadata.drop_all(engine)
+    SQLModel.metadata.create_all(engine)
+    return {"message": "Database reset"}
