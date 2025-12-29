@@ -1,0 +1,25 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: tic-tac-toe
+          source: .
+          region: us-central1
+          flags: >-
+            --vpc-connector=tictactoe-connector
+            --set-env-vars=DATABASE_URL=postgresql://postgres:postgres123@10.89.0.3:5432/tictactoe
